@@ -1,3 +1,16 @@
+# Linux Support
+
+1. Install Wine.
+
+2. Install Python for Windows on Linux with the help of Wine.
+
+3. Find the path to python.exe.
+
+4. Install mt5 library on your Windows Python version.
+
+5. On a terminal:
+   `python -m mt5linux <path/to/python.exe>`
+
 # 📘 MT5 - Flask API - Function Summary
 
 ## 1. `/ping`
