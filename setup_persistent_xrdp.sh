@@ -21,7 +21,7 @@ sudo sed -i '/^test -x .*startwm.sh/,$d' /etc/xrdp/startwm.sh
 echo "startxfce4" | sudo tee -a /etc/xrdp/startwm.sh
 
 echo "Configuring xrdp.ini for session policy..."
-sudo sed -i '/\\[Xorg\\]/,/^\\[/ s/^session_policy=.*/session_policy=allow/' /etc/xrdp/xrdp.ini
+sudo sed -i '/\[Xorg\]/,/^\[/ s/^session_policy=.*/session_policy=allow/' /etc/xrdp/xrdp.ini
 
 echo "Configuring sesman.ini to prevent session termination..."
 sudo sed -i 's/^KillDisconnected=.*/KillDisconnected=false/' /etc/xrdp/sesman.ini
