@@ -1,14 +1,8 @@
 from flask import Flask, request, jsonify
 from datetime import datetime
+import MetaTrader5 as mt5
 import time
 # import the package
-from mt5linux import MetaTrader5
-
-# connecto to the server
-mt5 = MetaTrader5(
-    # host = 'localhost' (default)
-    # port = 18812       (default)
-) 
 
 app = Flask(__name__)
 trade_map = {}  # trade_id -> ticket
