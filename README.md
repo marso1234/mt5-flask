@@ -16,6 +16,8 @@ A script used to make xrdp remote desktop not closing when disconnected
 
 # 📘 MT5 - Flask API - Function Summary
 
+To start the service, run `flask run --host=0.0.0.0` in directory
+
 ## 1. `/ping`
 Checks if the API and MT5 terminal are running and responsive.
 
