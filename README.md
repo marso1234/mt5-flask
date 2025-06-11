@@ -8,7 +8,11 @@ MT5 python library supports Windows natively, linux os requires additional setup
 
 3. Install MT5 and Flask package
 
-4. Commands may refer to setup_MT5_ubuntu.sh
+4. Commands may refer to setup_MT5_ubuntu.md
+
+# setup_persistent_xrdp.sh
+
+A script used to make xrdp remote desktop not closing when disconnected
 
 # 📘 MT5 - Flask API - Function Summary
 
