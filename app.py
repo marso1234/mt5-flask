@@ -84,6 +84,8 @@ def start_order():
     order_type = data.get('type')
     order_id = data.get('order_id')
     strategy = data.get('strategy')
+    stop_loss = data.get('stop_loss')
+    stop_profit = data.get('stop_profit')
 
     success, msg = initialize_mt5()
     if not success:
@@ -104,6 +106,8 @@ def start_order():
         "comment": f"{symbol}|{strategy}|{order_id}",
         "type_time": mt5.ORDER_TIME_GTC,
         "type_filling": mt5.ORDER_FILLING_IOC,
+        'sl': stop_loss,
+        'tp': stop_profit
     }
 
     result = mt5.order_send(request_data)
