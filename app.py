@@ -90,8 +90,8 @@ def start_order():
         return jsonify({'error': msg}), 500
 
     tick = mt5.symbol_info_tick(symbol)
-    price = tick.ask if order_type == 'buy' else tick.bid
-    order_type_enum = mt5.ORDER_TYPE_BUY if order_type == 'buy' else mt5.ORDER_TYPE_SELL
+    price = tick.ask if order_type == 'BUY' else tick.bid
+    order_type_enum = mt5.ORDER_TYPE_BUY if order_type == 'BUY' else mt5.ORDER_TYPE_SELL
 
     request_data = {
         "action": mt5.TRADE_ACTION_DEAL,
