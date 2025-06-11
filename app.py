@@ -80,9 +80,10 @@ def order_history():
 def start_order():
     data = request.json
     symbol = data.get('symbol')
-    volume = data.get('volume')
-    order_type = data.get('type', 'buy')
-    trade_id = data.get('trade_id')
+    size = data.get('size')
+    order_type = data.get('type')
+    order_id = data.get('order_id')
+    strategy = data.get('strategy')
 
     success, msg = initialize_mt5()
     if not success:
@@ -95,12 +96,12 @@ def start_order():
     request_data = {
         "action": mt5.TRADE_ACTION_DEAL,
         "symbol": symbol,
-        "volume": volume,
+        "volume": size,
         "type": order_type_enum,
         "price": price,
         "deviation": 10,
         "magic": 234000,
-        "comment": f"n8n automation {trade_id}",
+        "comment": f"{symbol}|{strategy}|{order_id}",
         "type_time": mt5.ORDER_TIME_GTC,
         "type_filling": mt5.ORDER_FILLING_IOC,
     }
