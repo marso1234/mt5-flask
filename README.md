@@ -1,15 +1,14 @@
-# Linux Support
+# MT5 Linux Setup
 
-1. Install Wine.
+MT5 python library supports Windows natively, linux os requires additional setup:
 
-2. Install Python for Windows on Linux with the help of Wine.
+1. Setup wine
 
-3. Find the path to python.exe.
+2. Install Meta Trader and Python 3.8
 
-4. Install mt5 library on your Windows Python version.
+3. Install MT5 and Flask package
 
-5. On a terminal:
-   `python -m mt5linux <path/to/python.exe>`
+4. Commands may refer to setup_MT5_ubuntu.sh
 
 # 📘 MT5 - Flask API - Function Summary
 
