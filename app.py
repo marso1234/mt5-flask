@@ -81,7 +81,6 @@ def start_order():
     symbol = data.get('symbol')
     size = data.get('size')
     order_type = data.get('order_type')
-    order_id = data.get('order_id')
     strategy = data.get('strategy')
     stop_loss = data.get('stop_loss')
     stop_profit = data.get('stop_profit')
@@ -90,11 +89,9 @@ def start_order():
     success, msg = initialize_mt5()
     if not success:
         return jsonify({'error': msg}), 500
-
     tick = mt5.symbol_info_tick(symbol)
     price = tick.ask if order_type == 'BUY' else tick.bid
     order_type_enum = mt5.ORDER_TYPE_BUY if order_type == 'BUY' else mt5.ORDER_TYPE_SELL
-    order_id_gen = f"{strategy}|{order_id}"
     
     request_data = {
         "action": mt5.TRADE_ACTION_DEAL,
@@ -104,7 +101,7 @@ def start_order():
         "price": price + epsilon - epsilon,
         "deviation": 10,
         "magic": 234000,
-        "comment": order_id_gen,
+        "comment": strategy,
         "type_time": mt5.ORDER_TIME_GTC,
         "type_filling": filling_mode - 1, # Offset of data?
         'sl': stop_loss + epsilon - epsilon,
