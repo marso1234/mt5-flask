@@ -124,38 +124,31 @@ def start_order():
 @app.route('/end_order', methods=['POST'])
 def end_order():
     data = request.json
-    trade_id = data.get('trade_id')
+    symbol = data.get('symbol')
+    entry_action = data.get('entry_action')
+    entry_volume = data.get('volume')
     ticket = data.get('ticket')
 
     success, msg = initialize_mt5()
     if not success:
         return jsonify({'error': msg}), 500
 
-    # if trade_id:
-    #     ticket = trade_map.get(trade_id)
-    #     if not ticket:
-    #         return jsonify({'error': 'Trade ID not found'}), 404
-
-    order = mt5.order_get(ticket=ticket)
-    if not order:
-        return jsonify({'error': 'Order not found'}), 404
-
-    tick = mt5.symbol_info_tick(order.symbol)
-    price = tick.bid if order.type == mt5.ORDER_TYPE_BUY else tick.ask
-    close_type = mt5.ORDER_TYPE_SELL if order.type == mt5.ORDER_TYPE_BUY else mt5.ORDER_TYPE_BUY
+    tick = mt5.symbol_info_tick(symbol)
+    price = tick.bid if entry_action == mt5.ORDER_TYPE_BUY else tick.ask
+    close_type = mt5.ORDER_TYPE_SELL if entry_action == mt5.ORDER_TYPE_BUY else mt5.ORDER_TYPE_BUY
 
     close_request = {
         "action": mt5.TRADE_ACTION_DEAL,
-        "symbol": order.symbol,
-        "volume": order.volume_current,
+        "symbol": symbol,
+        "volume": entry_volume,
         "type": close_type,
         "position": ticket,
         "price": price,
         "deviation": 10,
         "magic": 234000,
-        "comment": f"n8n close {trade_id or ticket}",
+        "comment": f"Signal Close",
         "type_time": mt5.ORDER_TIME_GTC,
-        "type_filling": mt5.ORDER_FILLING_IOC,
+        "type_filling": mt5.ORDER_FILLING_FOK,
     }
 
     result = mt5.order_send(close_request)
