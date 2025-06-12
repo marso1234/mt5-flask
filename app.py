@@ -5,7 +5,7 @@ import time
 # import the package
 
 app = Flask(__name__)
-epsilon = 1e-7 # A very small value to prevent value being a integer (which cause error in MT5)
+epsilon = 1e-7 # A very small value to prevent value being identified as integer (which cause error in MT5)
 def initialize_mt5():
     if not mt5.initialize():
         return False, mt5.last_error()
@@ -100,14 +100,14 @@ def start_order():
         "symbol": symbol,
         "volume": size,
         "type": order_type_enum,
-        "price": price,
+        "price": price + epsilon - epsilon,
         "deviation": 10,
         "magic": 234000,
         "comment": order_id_gen,
         "type_time": mt5.ORDER_TIME_GTC,
         "type_filling": mt5.ORDER_FILLING_FOK,
         'sl': stop_loss + epsilon - epsilon,
-        'tp': stop_profit
+        'tp': stop_profit + epsilon - epsilon
     }
 
     print(request_data)
