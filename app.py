@@ -5,7 +5,6 @@ import time
 # import the package
 
 app = Flask(__name__)
-trade_map = {}  # trade_id -> ticket
 
 def initialize_mt5():
     if not mt5.initialize():
@@ -110,9 +109,13 @@ def start_order():
         'tp': stop_profit
     }
 
+    print(request_data)
+    
     result = mt5.order_send(request_data)
-    if result.retcode == mt5.TRADE_RETCODE_DONE and trade_id:
-        trade_map[trade_id] = result.order
+    
+    if result is None or result.retcode != mt5.TRADE_RETCODE_DONE:
+        print("Order send failed:", mt5.last_error())
+        return jsonify({'error': mt5.last_error()})
 
     return jsonify({'result': result._asdict()})
 
@@ -126,10 +129,10 @@ def end_order():
     if not success:
         return jsonify({'error': msg}), 500
 
-    if trade_id:
-        ticket = trade_map.get(trade_id)
-        if not ticket:
-            return jsonify({'error': 'Trade ID not found'}), 404
+    # if trade_id:
+    #     ticket = trade_map.get(trade_id)
+    #     if not ticket:
+    #         return jsonify({'error': 'Trade ID not found'}), 404
 
     order = mt5.order_get(ticket=ticket)
     if not order:
