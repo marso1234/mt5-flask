@@ -106,8 +106,8 @@ def start_order():
         "comment": order_id_gen,
         "type_time": mt5.ORDER_TIME_GTC,
         "type_filling": mt5.ORDER_FILLING_FOK,
-        'sl': "%.2f" % stop_loss,
-        'tp': "%.2f" % stop_profit
+        'sl': stop_loss + 0.000000001,
+        'tp': stop_profit
     }
 
     print(request_data)
