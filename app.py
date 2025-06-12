@@ -111,6 +111,7 @@ def start_order():
     }
 
     print(request_data)
+    print(f"Order is {order_type}, {order_type=='BUY}")
     
     result = mt5.order_send(request_data)
 
