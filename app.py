@@ -128,6 +128,7 @@ def end_order():
     symbol = data.get('symbol')
     entry_action = data.get('entry_action')
     entry_volume = data.get('volume')
+    filling_mode = data.get('filling_mode')
     ticket = data.get('ticket')
 
     success, msg = initialize_mt5()
@@ -148,7 +149,7 @@ def end_order():
         "deviation": 10,
         "magic": 234000,
         "comment": f"Signal Close",
-        "type_time": mt5.ORDER_TIME_GTC,
+        "type_time": filling_mode - 1,
         "type_filling": mt5.ORDER_FILLING_FOK,
     }
 
