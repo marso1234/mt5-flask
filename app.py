@@ -113,7 +113,7 @@ def start_order():
     print(request_data)
     
     result = mt5.order_send(request_data)
-    
+    time.sleep(2)
     if result is None or result.retcode != mt5.TRADE_RETCODE_DONE:
         print("Order send failed:", mt5.last_error())
         return jsonify({'error': mt5.last_error()})
