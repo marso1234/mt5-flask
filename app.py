@@ -98,7 +98,7 @@ def start_order():
     request_data = {
         "action": mt5.TRADE_ACTION_DEAL,
         "symbol": symbol,
-        "volume": size,
+        "volume": size + epsilon - epsilon,
         "type": order_type_enum,
         "price": price + epsilon - epsilon,
         "deviation": 10,
@@ -140,10 +140,10 @@ def end_order():
     close_request = {
         "action": mt5.TRADE_ACTION_DEAL,
         "symbol": symbol,
-        "volume": entry_volume,
+        "volume": entry_volume + epsilon - epsilon,
         "type": close_type,
         "position": ticket,
-        "price": price,
+        "price": price + epsilon - epsilon,
         "deviation": 10,
         "magic": 234000,
         "comment": f"Signal Close",
