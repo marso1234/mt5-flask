@@ -93,7 +93,7 @@ def start_order():
     tick = mt5.symbol_info_tick(symbol)
     price = tick.ask if order_type == 'BUY' else tick.bid
     order_type_enum = mt5.ORDER_TYPE_BUY if order_type == 'BUY' else mt5.ORDER_TYPE_SELL
-    order_id_gen = f"{symbol}_{strategy}_{order_id}".replace(".","-")
+    order_id_gen = f"{symbol}_{strategy}"
     
     request_data = {
         "action": mt5.TRADE_ACTION_DEAL,
