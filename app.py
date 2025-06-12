@@ -105,7 +105,7 @@ def start_order():
         "magic": 234000,
         "comment": order_id_gen,
         "type_time": mt5.ORDER_TIME_GTC,
-        "type_filling": mt5.ORDER_FILLING_FOK,
+        "type_filling": mt5.ORDER_FILLING_IOC,
         'sl': stop_loss + epsilon - epsilon,
         'tp': stop_profit + epsilon - epsilon
     }
