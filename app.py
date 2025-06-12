@@ -100,7 +100,7 @@ def start_order():
         "symbol": symbol,
         "volume": size,
         "type": order_type_enum,
-        "price": "%.2f" % price,
+        "price": price,
         "deviation": 10,
         "magic": 234000,
         "comment": order_id_gen,
