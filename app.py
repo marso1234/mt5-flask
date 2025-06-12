@@ -85,6 +85,7 @@ def start_order():
     strategy = data.get('strategy')
     stop_loss = data.get('stop_loss')
     stop_profit = data.get('stop_profit')
+    filling_mode = data.get('filling_mode')
 
     success, msg = initialize_mt5()
     if not success:
@@ -105,7 +106,7 @@ def start_order():
         "magic": 234000,
         "comment": order_id_gen,
         "type_time": mt5.ORDER_TIME_GTC,
-        "type_filling": mt5.ORDER_FILLING_IOC,
+        "type_filling": filling_mode,
         'sl': stop_loss + epsilon - epsilon,
         'tp': stop_profit + epsilon - epsilon
     }
