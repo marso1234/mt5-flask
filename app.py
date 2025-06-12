@@ -80,7 +80,7 @@ def start_order():
     data = request.json
     symbol = data.get('symbol')
     size = data.get('size')
-    order_type = data.get('type')
+    order_type = data.get('order_type')
     order_id = data.get('order_id')
     strategy = data.get('strategy')
     stop_loss = data.get('stop_loss')
