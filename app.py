@@ -149,7 +149,7 @@ def end_order():
         "deviation": 10,
         "magic": 234000,
         "comment": f"Signal Close",
-        "type_time": filling_mode,
+        "type_time": filling_mode - 1,
         "type_filling": mt5.ORDER_FILLING_FOK,
     }
 
