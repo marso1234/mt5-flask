@@ -100,14 +100,14 @@ def start_order():
         "symbol": symbol,
         "volume": size,
         "type": order_type_enum,
-        "price": price,
+        "price": float(price),
         "deviation": 10,
         "magic": 234000,
         "comment": order_id_gen,
         "type_time": mt5.ORDER_TIME_GTC,
         "type_filling": mt5.ORDER_FILLING_FOK,
-        'sl': stop_loss,
-        'tp': stop_profit
+        'sl': float(stop_loss),
+        'tp': float(stop_profit)
     }
 
     print(request_data)
