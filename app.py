@@ -80,7 +80,7 @@ def start_order():
     data = request.json
     symbol = data.get('symbol')
     size = data.get('size')
-    order_type = data.get('order_type')
+    order_type = data.get('order_type').upper()
     strategy = data.get('strategy')
     stop_loss = data.get('stop_loss')
     stop_profit = data.get('stop_profit')
@@ -90,7 +90,7 @@ def start_order():
     if not success:
         return jsonify({'error': msg}), 500
     tick = mt5.symbol_info_tick(symbol)
-    price = tick.ask if order_type.upper() == 'BUY' else tick.bid
+    price = tick.ask if order_type == 'BUY' else tick.bid
     order_type_enum = mt5.ORDER_TYPE_BUY if order_type == 'BUY' else mt5.ORDER_TYPE_SELL
     
     request_data = {
