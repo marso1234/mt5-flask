@@ -61,7 +61,15 @@ def symbol_info():
     if not success:
         return jsonify({'error': msg}), 500
     info = mt5.symbol_info(symbol)
-    return jsonify(info._asdict() if info else {'error': 'Symbol not found'})
+    info = info._asdict() if info else None
+    if info is not None:
+        trail = 0
+        # Retry a few times if price is invalid
+        while info.get("ask", 0) == 0 and trail < 5:
+            time.sleep(1)
+            info = mt5.symbol_info(symbol)._asdict()
+
+    return jsonify(info if info else {'error': 'Symbol not found'})
 
 @app.route('/order_history', methods=['GET'])
 def order_history():
