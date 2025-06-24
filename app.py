@@ -60,6 +60,11 @@ def symbol_info():
     success, msg = initialize_mt5()
     if not success:
         return jsonify({'error': msg}), 500
+
+    # Automatically add symbol to Market Watch if not already present
+    if not mt5.symbol_select(symbol, True):
+        return jsonify({'error': f'Failed to add symbol {symbol} to Market Watch'}), 500
+
     info = mt5.symbol_info(symbol)
     info = info._asdict() if info else None
     if info is not None:
