@@ -73,7 +73,10 @@ def symbol_info():
         while info.get("ask", 0) == 0 and trail < 5:
             time.sleep(1)
             info = mt5.symbol_info(symbol)._asdict()
-
+            
+    # Remove from Market Watch
+    mt5.symbol_select(symbol, False)
+    
     return jsonify(info if info else {'error': 'Symbol not found'})
 
 @app.route('/order_history', methods=['GET'])
@@ -220,6 +223,33 @@ def close_all():
         results.append(result._asdict())
 
     return jsonify({'closed_positions': results})
+
+@app.route('/clear_all_watches', methods=['POST'])
+def clear_all_watches():
+    success, msg = initialize_mt5()
+    if not success:
+        return jsonify({'error': msg}), 500
+
+    # Get all symbols that are currently selected (visible in Market Watch)
+    all_symbols = mt5.symbols_get()
+
+    removed = []
+    failed = []
+
+    for symbol_info in all_symbols:
+        symbol = symbol_info.name
+        # Only try to remove if currently selected
+        if mt5.symbol_info(symbol).visible:
+            if mt5.symbol_select(symbol, False):
+                removed.append(symbol)
+            else:
+                failed.append(symbol)
+
+    return jsonify({
+        'removed': removed,
+        'failed': failed,
+        'message': f'Removed {len(removed)} symbols from Market Watch.'
+    })
 
 @app.route('/webhook_log', methods=['POST'])
 def webhook_log():
