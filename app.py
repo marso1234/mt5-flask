@@ -105,6 +105,11 @@ def start_order():
     success, msg = initialize_mt5()
     if not success:
         return jsonify({'error': msg}), 500
+        
+    # Automatically add symbol to Market Watch if not already present
+    if not mt5.symbol_select(symbol, True):
+        return jsonify({'error': f'Failed to add symbol {symbol} to Market Watch'}), 500
+        
     tick = mt5.symbol_info_tick(symbol)
     price = tick.ask if order_type == 'BUY' else tick.bid
     order_type_enum = mt5.ORDER_TYPE_BUY if order_type == 'BUY' else mt5.ORDER_TYPE_SELL
